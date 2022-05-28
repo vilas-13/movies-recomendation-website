@@ -9,7 +9,7 @@ img = Image.open('logo.png')
 
 st.set_page_config(page_title='vitz-movie-recommendation',page_icon=img)
 
-#to find poster of the movie through tmdb website
+#to find poster of the movie through tmdb website using API
 def movie_poster(movie_id):
     responce = requests.get('https://api.themoviedb.org/3/movie/{}?api_key=cd6d3e0fc5659c70b34cb0d01bedef77&language=en-US'.format(movie_id))
     poster = responce.json()
@@ -37,6 +37,7 @@ similarities=pickle.load(open('Similar_movies.pkl','rb')) #here similar_movies.p
 
 st.title('VITZ Movie Recomender')
 
+#search box 
 movie_search=st.selectbox(
     'Search Your Movies',
     mvf['title'].values)
@@ -44,7 +45,7 @@ movie_search=st.selectbox(
 if st.button('Recommend'):
     movie_name,movie_pos=recommend(movie_search)
 
-    col1, col2, col3, col4,col5 = st.columns(5)
+    col1, col2, col3, col4,col5 = st.columns(5)  #creating colomn for movie posters
     with col1:
         st.text(movie_name[0])
         st.image(movie_pos[0])
